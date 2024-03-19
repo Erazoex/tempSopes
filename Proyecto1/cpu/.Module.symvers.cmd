@@ -1,0 +1,1 @@
+savedcmd_/home/erazoex/Repositories/SO1_1S2024_201807253/Proyecto1/cpu/Module.symvers :=  scripts/mod/modpost -m -a      -o /home/erazoex/Repositories/SO1_1S2024_201807253/Proyecto1/cpu/Module.symvers -T /home/erazoex/Repositories/SO1_1S2024_201807253/Proyecto1/cpu/modules.order -i Module.symvers -e 

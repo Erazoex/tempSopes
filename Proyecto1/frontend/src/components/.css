@@ -1,0 +1,29 @@
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.content {
+  text-align: center;
+}
+
+.app-container {
+  display: flex;
+  justify-content: center; /* Centra el contenido horizontalmente */
+  align-items: center; /* Centra el contenido verticalmente */
+  height: 100vh; /* Ajusta la altura del contenedor al 100% del viewport */
+}
+
+.centered-container {
+  text-align: center; /* Alinea el contenido de forma central */
+}
+
+.graph-container {
+  display: flex; /* Utiliza flexbox */
+}
+
+.graph {
+  flex: 1; /* Hace que ambos gráficos ocupen el mismo espacio en la fila */
+}

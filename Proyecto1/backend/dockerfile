@@ -1,0 +1,18 @@
+FROM golang:latest
+
+# Establece el directorio de trabajo dentro del contenedor
+WORKDIR /app
+
+# Copia los archivos del backend a la imagen
+COPY . .
+
+# Compila el código del backend
+RUN go build .
+
+# Expone el puerto en el que el backend escucha (cambia 8080 por el puerto que uses)
+EXPOSE 8080
+
+# Comando para ejecutar el backend (usa 'CMD' si no necesitas argumentos adicionales)
+ENTRYPOINT ["./backend"]
+
+# docker build -t backend .

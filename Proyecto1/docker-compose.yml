@@ -1,0 +1,37 @@
+version: '3.8'
+
+services:
+  mysql-container:
+    image: mysql:latest
+    container_name: mysql-container
+    restart: unless-stopped
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
+    volumes:
+      - ./mysql-data:/var/lib/mysql
+
+  backend:
+    restart: unless-stopped
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"  # Puedes cambiar el puerto según sea necesario
+
+  frontend:
+    restart: unless-stopped
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - "80:80"  # Puedes cambiar el puerto según sea necesario
+
+  nginx:
+    restart: unless-stopped
+    build:
+      context: ./nginx-config
+      dockerfile: Dockerfile
+    ports:
+      - "8001:80"
