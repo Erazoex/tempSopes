@@ -1,5 +1,6 @@
 import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement} from "chart.js";
 import { Line } from "react-chartjs-2";
+import '../App.css'
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement);
 
@@ -34,7 +35,7 @@ const LineGraph = ({ titulo, label , tiempos, valores}) => {
   };
 
   return (
-    <div>
+    <div className="linechart-container">
       <h2>{titulo}</h2>
       <Line data={data} options={options} />
     </div>

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import Tree from './tree';
 import axios from 'axios';
 
@@ -7,40 +8,50 @@ const ProcessTree = () => {
     // const baseUrl = "http://localhost:8080";
     const baseUrlCpu = "cpu";
 
-    const [cpu, setCpu] = useState({});
-    const [process, setProcess] = useState({})
-
+    const [cpu, setCpu] = useState(null);
+    const [process, setProcess] = useState(null);
 
     useEffect(() => {
-      const getCpu = () => {
-        axios.get(`${baseUrl}/${baseUrlCpu}/get`)
-          .then((response) => {
-            setCpu(response.data);
-          })
-          .catch(error => {
-            console.error("Error al obtener los datos del cpu", error);
-          });
+      const getCpu =  async () => {
+        try {
+          const response = await axios.get(`${baseUrl}/${baseUrlCpu}/get`);
+          setCpu(response.data);
+
+        } catch (error) {
+          console.error("Error al obtener los datos del cpu", error)
+        }
       }
       getCpu();
-      console.log("A")
-    });
+    }, []);
 
     const handleSelectChange = (event) => {
-      setProcess(event.target.value);
+      if (event.target.value == -1) {
+        return;
+      }
+      const selectedPid = event.target.value;
+      const selected = cpu.processes.find(process => process.pid == selectedPid);
+      setProcess(selected);
     }
 
   return (
     <div className="content">
-      <h2>Arbol de Processos</h2>
-      <h3>Selecciona una opcion</h3>
-      <select value={process} onChange={handleSelectChange}>
-        {cpu && cpu.processes.map((proc, index) => {
-          return (
-            <option key={index} value={proc}>{proc.pid}</option>
-          )
-        })}
-      </select>
-      <Tree process={process}/>
+      <h1>Arbol de Processos</h1>
+      {cpu && (
+        <div>
+          <select onChange={handleSelectChange}>
+            <option value={-1}>Seleccione una opcion</option>
+            {cpu.processes.map((process, index) => (
+              <option key={index} value={process.pid}>
+                {process.pid}
+              </option>
+            ))}
+          </select>
+          {process && <Tree process={process}/>}
+        </div>
+      )}
+      <Link to="/">
+        <button>Regresar a la pagina principal</button>
+      </Link>
     </div>
   );
 };

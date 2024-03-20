@@ -1,46 +1,59 @@
-import React, { useRef, useEffect } from "react";
-import { DataSet, Network } from "vis-network/standalone";
-import "vis-network/styles/vis-network.css";
+import React, { useEffect, useRef } from 'react';
+import { Network, DataSet } from 'vis-network/standalone/esm/vis-network.min.js';
 
-const Tree = ({ process }) => {
+const ProcessTree = ({ process }) => {
   const containerRef = useRef(null);
+  const networkRef = useRef(null);
 
   useEffect(() => {
-    const nodes = new DataSet([
-      { id: 1, label: "Raíz" },
-      { id: 2, label: "Nodo 1" },
-      { id: 3, label: "Nodo 2" },
-      { id: 4, label: "Nodo 3" }
-    ]);
+    if (!process || !containerRef.current) return;
 
-    const edges = new DataSet([
-      { from: 1, to: 2 },
-      { from: 1, to: 3 },
-      { from: 1, to: 4 }
-    ]);
+    // Crear un DataSet para los nodos y aristas
+    const nodes = new DataSet();
+    const edges = new DataSet();
 
-    const data = {
-      nodes: nodes,
-      edges: edges
+    // Agregar el nodo raíz
+    nodes.add({ id: process.pid, label: process.name });
+
+    // Función recursiva para agregar nodos y aristas
+    const addNodesAndEdges = (parent, children) => {
+      children.forEach(child => {
+        nodes.add({ id: child.pid, label: child.name });
+        edges.add({ from: parent.pid, to: child.pid });
+        if (child.child && child.child.length > 0) {
+          addNodesAndEdges(child, child.child);
+        }
+      });
     };
 
+    // Agregar nodos y aristas
+    if (process.child && process.child.length > 0) {
+      addNodesAndEdges(process, process.child);
+    }
+
+    // Configurar la red
+    const data = { nodes, edges };
     const options = {
       layout: {
         hierarchical: {
-          direction: "UD",
-          sortMethod: "directed"
+          direction: "UD", // De arriba hacia abajo
+          sortMethod: "directed", // Ordena los nodos según la dirección de las aristas
+          levelSeparation: 150, // Separación entre niveles del árbol
+          nodeSpacing: 100 // Espaciado entre nodos
         }
       }
     };
-
-    const network = new Network(containerRef.current, data, options);
+    networkRef.current = new Network(containerRef.current, data, options);
 
     return () => {
-      network.destroy();
+      if (networkRef.current) {
+        networkRef.current.destroy();
+        networkRef.current = null;
+      }
     };
-  }, []);
+  }, [process]);
 
-  return <div ref={containerRef} style={{ width: "600px", height: "400px" }} />;
+  return <div ref={containerRef} style={{ width: '100%', height: '70vh' }} />;
 };
 
-export default Tree;
+export default ProcessTree;

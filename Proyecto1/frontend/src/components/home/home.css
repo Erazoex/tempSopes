@@ -1,11 +1,21 @@
-.navbar {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-  }
-  
-  .nav-item {
-    margin: 0 10px;
-  }
-  
+.App {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.data-container {
+  margin-bottom: 20px; /* Espacio entre el nombre y los botones */
+}
+
+.buttons-container {
+  display: flex;
+  justify-content: center;
+}
+
+button {
+  margin: 0 10px; /* Espacio entre los botones */
+}

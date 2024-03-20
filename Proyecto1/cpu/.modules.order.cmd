@@ -1,1 +1,1 @@
-savedcmd_/home/erazoex/Repositories/SO1_1S2024_201807253/Proyecto1/cpu/modules.order := {   echo /home/erazoex/Repositories/SO1_1S2024_201807253/Proyecto1/cpu/cpu.o; :; } > /home/erazoex/Repositories/SO1_1S2024_201807253/Proyecto1/cpu/modules.order
+savedcmd_/home/erazoex/Repositories/tempSopes/Proyecto1/cpu/modules.order := {   echo /home/erazoex/Repositories/tempSopes/Proyecto1/cpu/cpu.o; :; } > /home/erazoex/Repositories/tempSopes/Proyecto1/cpu/modules.order

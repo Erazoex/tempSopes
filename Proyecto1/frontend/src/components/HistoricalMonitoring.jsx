@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import LineGraph from './home/lineGraph';
+import LineGraph from './lineGraph';
 import axios from 'axios';
 import "./.css"
 
@@ -72,7 +72,9 @@ const HistoricalMonitoring = () => {
             <LineGraph titulo="RAM" label="Uso de la memoria RAM a lo largo del tiempo" tiempos={ramTime} valores={ram}/>
             <LineGraph titulo="CPU" label="Uso del CPU a lo largo del tiempo" tiempos={cpuTime} valores={cpu}/>
         </div>
-        <Link to="/">Regresar a la pagina principal</Link>
+        <Link to="/">
+          <button>Regresar a la pagina principal</button>
+        </Link>
       </div>
     </div>
   );

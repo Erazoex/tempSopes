@@ -55,8 +55,9 @@ const RealTimeMonitoring = () => {
             <PieGraph titulo="RAM" label="Uso de la memoria RAM" EnUso={ram?.usedMemory} Total={ram?.totalRam}/>
             <PieGraph titulo="CPU" label="Uso del CPU" EnUso={cpu?.cpu_percentage} Total={cpu?.cpu_total}/>
         </div>
-        <Link to="/">Regresar a la pagina principal</Link>
-
+        <Link to="/">
+          <button>Regresar a la pagina principal</button>
+        </Link>
       </div>
     </div>
   );

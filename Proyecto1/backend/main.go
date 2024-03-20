@@ -4,6 +4,7 @@ import (
 	cpucontroller "backend/controllers/cpu.controller"
 	ramcontroller "backend/controllers/ram.controller"
 	"fmt"
+	"time"
 )
 
 func main() {
@@ -17,7 +18,7 @@ func main() {
 			if err := cpucontroller.Post(*cpuInfo); err != nil {
 				fmt.Println(err.Error())
 			}
-			// time.Sleep(50000 * time.Millisecond)
+			time.Sleep(2500 * time.Millisecond)
 		}
 	}()
 	// rutina para ram
@@ -33,7 +34,7 @@ func main() {
 			if err := ramcontroller.Post(*ramInfo); err != nil {
 				fmt.Println(err.Error())
 			}
-			// time.Sleep(50000 * time.Millisecond)
+			time.Sleep(2500 * time.Millisecond)
 		}
 	}()
 	server := NewServer(":8080")

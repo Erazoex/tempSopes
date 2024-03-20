@@ -66,6 +66,5 @@ func Execute(db *Db, query string) (sql.Result, error) {
 }
 
 func Query(db *Db, query string) (*sql.Rows, error) {
-	fmt.Println("Entra al query")
 	return db.Db.Query(query)
 }

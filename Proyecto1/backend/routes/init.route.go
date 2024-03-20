@@ -13,4 +13,6 @@ func Init() {
 	CpuRoutes()
 	// rutas relacionadas a la memoria ram
 	RamRoutes()
+	// rutas relacionadas a los estados de procesos
+	ProcessRoutes()
 }
