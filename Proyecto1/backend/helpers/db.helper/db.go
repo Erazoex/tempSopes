@@ -12,7 +12,7 @@ type Db struct {
 }
 
 func NewConnection() (*Db, error) {
-	src := "root:@tcp(127.0.0.1:3306)/"
+	src := "root:@tcp(mysql-container:3306)/"
 	dbName := "sopes"
 	db, err := sql.Open("mysql", src)
 	if err != nil {

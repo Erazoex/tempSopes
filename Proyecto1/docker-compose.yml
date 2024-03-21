@@ -1,4 +1,4 @@
-version: '3.8'
+version: '3'
 
 services:
   mysql-container:
@@ -11,27 +11,29 @@ services:
       MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
     volumes:
       - ./mysql-data:/var/lib/mysql
+    networks:
+      - my-network
 
   backend:
+    image: erazoex/backend:latest
     restart: unless-stopped
-    build:
-      context: ./backend
-      dockerfile: Dockerfile
     ports:
-      - "8080:8080"  # Puedes cambiar el puerto según sea necesario
+      - "8080:8080"  
+    depends_on:
+      - mysql-container
+    networks:
+      - my-network
 
   frontend:
+    image: erazoex/frontend:latest
     restart: unless-stopped
-    build:
-      context: ./frontend
-      dockerfile: Dockerfile
     ports:
-      - "80:80"  # Puedes cambiar el puerto según sea necesario
-
-  nginx:
-    restart: unless-stopped
-    build:
-      context: ./nginx-config
-      dockerfile: Dockerfile
-    ports:
-      - "8001:80"
+      - "80:80"  
+    depends_on:
+      - backend
+    networks:
+      - my-network
+    
+networks:
+  my-network:
+    driver: bridge

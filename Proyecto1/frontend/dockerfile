@@ -5,24 +5,25 @@ FROM node:latest as build-stage
 WORKDIR /app
 
 # Copia el archivo package.json y package-lock.json (o el equivalente) para instalar dependencias
-COPY ./package*.json ./
+COPY package.json .
+COPY package-lock.json .
 
 # Instala las dependencias del frontend
 RUN npm install
 
-# Copia el resto de los archivos del frontend al directorio de trabajo
-COPY ./ ./
+COPY . .
 
-# Compila o construye tu frontend
 RUN npm run build
 
 # Segunda etapa para servir los archivos estáticos
-FROM nginx:latest
+FROM nginx:alpine
 
 # Copia los archivos estáticos del frontend compilado desde la etapa de compilación
 COPY --from=build-stage ./app/dist/ /usr/share/nginx/html
 
+COPY nginx.config /etc/nginx/nginx.conf
+
 # Exponer el puerto 80 para que Nginx pueda servir la aplicación
 EXPOSE 80
+CMD ["nginx", "-g", "daemon off;"]
 
-# Nginx ya está configurado por defecto para iniciar el servidor web
